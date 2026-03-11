@@ -328,7 +328,7 @@
 
     <div id="loading-page">
         <div class="flash" id="f1"></div>
-        <div class="flash" id="f2" style="animation-delay: 0.4s;"></div>
+        <div class="flash" id="f2" style="animation-delay: 0.0s;"></div>
     </div>
     <button class="btn-replay" id="replay" onclick="resetAll()">↻</button>
     <div class="bg-wave" id="wave"></div>
@@ -356,7 +356,7 @@
 
         <div id="page-2" style="display:none;">
             <div class="flex-container">
-                <div class="photo-wrapper side-photo"><img src="amor.JPG" alt="Amor"></div>
+                <div class="photo-wrapper side-photo"><img src="amor.jpg" alt="Amor"></div>
                 <div class="side-content">
                     <div class="final-text">
                         Sou completamente apaixonado por você, desde sua personalidade incrível até a forma de lidar
@@ -404,23 +404,56 @@
 
         function triggerFlash(targetPage) {
             const loader = document.getElementById('loading-page');
-            const f1 = document.getElementById('f1'); const f2 = document.getElementById('f2');
+            const f1 = document.getElementById('f1'); 
+            const f2 = document.getElementById('f2');
             loader.style.display = 'flex';
-            f1.classList.add('flash-active'); f2.classList.add('flash-active');
+            f1.classList.add('flash-active'); 
+            f2.classList.add('flash-active');
             setTimeout(() => { goToPage(targetPage); }, 600);
-            setTimeout(() => { loader.style.display = 'none'; f1.classList.remove('flash-active'); f2.classList.remove('flash-active'); }, 1500);
+            setTimeout(() => { 
+                loader.style.display = 'none'; 
+                f1.classList.remove('flash-active'); 
+                f2.classList.remove('flash-active'); 
+            }, 1500);
         }
 
+        // ======== FUNÇÃO GO TO PAGE COM ANIMAÇÃO ESCURO → CLARO ========
         function goToPage(num) {
-            const p1 = document.getElementById('page-1'); const p2 = document.getElementById('page-2');
-            const card = document.getElementById('card'); const counter = document.getElementById('nav-counter');
+            const p1 = document.getElementById('page-1');
+            const p2 = document.getElementById('page-2');
+            const card = document.getElementById('card');
+            const counter = document.getElementById('nav-counter');
+
             card.scrollTop = 0;
+
             if (num === 2) {
-                p1.style.display = 'none'; p2.style.display = 'block';
-                card.classList.add('horizontal'); counter.innerHTML = '2/2';
+                p1.style.display = 'none';
+                p2.style.display = 'block';
+                p2.style.opacity = '0';
+                p2.style.filter = 'brightness(0)';
+
+                requestAnimationFrame(() => {
+                    p2.style.transition = 'opacity 0.8s ease, filter 0.8s ease';
+                    p2.style.opacity = '1';
+                    p2.style.filter = 'brightness(1)';
+                });
+
+                card.classList.add('horizontal');
+                counter.innerHTML = '2/2';
             } else {
-                p1.style.display = 'block'; p2.style.display = 'none';
-                card.classList.remove('horizontal'); counter.innerHTML = '1/2';
+                p2.style.display = 'none';
+                p1.style.display = 'block';
+                p1.style.opacity = '0';
+                p1.style.filter = 'brightness(0)';
+
+                requestAnimationFrame(() => {
+                    p1.style.transition = 'opacity 0.8s ease, filter 0.8s ease';
+                    p1.style.opacity = '1';
+                    p1.style.filter = 'brightness(1)';
+                });
+
+                card.classList.remove('horizontal');
+                counter.innerHTML = '1/2';
             }
         }
 
@@ -435,8 +468,11 @@
 
         setInterval(updateTimer, 1000);
         setInterval(() => {
-            const h = document.createElement('div'); h.className = 'heart'; h.innerHTML = '🤍';
-            h.style.left = Math.random() * 100 + 'vw'; document.body.appendChild(h);
+            const h = document.createElement('div'); 
+            h.className = 'heart'; 
+            h.innerHTML = '🤍';
+            h.style.left = Math.random() * 100 + 'vw'; 
+            document.body.appendChild(h);
             setTimeout(() => h.remove(), 8000);
         }, 900);
         updateTimer();
