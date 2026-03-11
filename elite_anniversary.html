@@ -1,0 +1,179 @@
+
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+    <meta charset="UTF-8">
+    <title>Exclusividade & Amor - 1 Mês</title>
+    <style>
+        :root {
+            --gold-gradient: linear-gradient(135deg, #bd9354 0%, #ffefbb 50%, #bd9354 100%);
+            --black-bg: #0a0a0a;
+            --premium-shadow: 0 0 30px rgba(189, 147, 84, 0.3);
+        }
+
+        body {
+            background-color: var(--black-bg);
+            background-image: radial-gradient(circle at center, #1a1a1a 0%, #000 100%);
+            color: #fff;
+            font-family: 'Playfair Display', serif;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            min-height: 100vh;
+            margin: 0;
+            overflow: hidden;
+        }
+
+        .elite-card {
+            background: rgba(15, 15, 15, 0.95);
+            padding: 50px;
+            border-radius: 5px;
+            border: 1px solid #bd9354;
+            text-align: center;
+            box-shadow: var(--premium-shadow);
+            position: relative;
+            max-width: 700px;
+            z-index: 10;
+        }
+
+        h1 {
+            background: var(--gold-gradient);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            font-size: 3em;
+            letter-spacing: 3px;
+            text-transform: uppercase;
+            margin-bottom: 5px;
+        }
+
+        .subtitle {
+            color: #bd9354;
+            letter-spacing: 5px;
+            font-size: 0.9em;
+            margin-bottom: 30px;
+        }
+
+        /* --- O BUQUÊ DE ELITE --- */
+        .bouquet-frame {
+            position: relative;
+            width: 450px;
+            height: 450px;
+            margin: 0 auto;
+            perspective: 1000px;
+        }
+
+        .flower { position: absolute; transform-style: preserve-3d; transition: 0.5s; cursor: pointer; }
+        .flower:hover { transform: scale(1.1) rotateY(10deg); filter: drop-shadow(0 0 20px #ffefbb); }
+
+        /* Rosa de Elite */
+        .rose { width: 100px; height: 100px; }
+        .rose-petal {
+            position: absolute;
+            width: 100%; height: 100%;
+            background: linear-gradient(45deg, #d42d58, #8b0000);
+            border-radius: 50% 0 50% 50%;
+            border: 1px solid rgba(255,215,0,0.3);
+        }
+
+        /* Margarida de Elite */
+        .daisy { width: 90px; height: 90px; }
+        .daisy-petal {
+            position: absolute;
+            top: 50%; left: 50%;
+            width: 12px; height: 45px;
+            background: #fff;
+            border-radius: 50%;
+            transform-origin: 50% 0%;
+            box-shadow: 0 0 10px rgba(255,255,255,0.5);
+        }
+        .daisy-center {
+            position: absolute;
+            top: 40%; left: 40%;
+            width: 25px; height: 25px;
+            background: var(--gold-gradient);
+            border-radius: 50%;
+            z-index: 5;
+            box-shadow: 0 0 15px #ffd700;
+        }
+
+        /* Posições ampliadas para destaque máximo */
+        .f1 { top: 10%; left: 40%; } /* Rosa Central Alta */
+        .f2 { top: 30%; left: 15%; } /* Margarida Esquerda */
+        .f3 { top: 30%; left: 65%; } /* Margarida Direita */
+        .f4 { top: 55%; left: 30%; } /* Rosa Baixa Esq */
+        .f5 { top: 55%; left: 55%; } /* Rosa Baixa Dir */
+
+        .gold-wrap {
+            position: absolute;
+            bottom: 0; left: 50%;
+            width: 4px; height: 150px;
+            background: var(--gold-gradient);
+            transform: translateX(-50%);
+        }
+
+        /* Partículas de Ouro */
+        .gold-particle {
+            position: absolute;
+            background: var(--gold-gradient);
+            width: 4px; height: 4px;
+            border-radius: 50%;
+            animation: fall linear infinite;
+        }
+
+        @keyframes fall {
+            to { transform: translateY(100vh) rotate(360deg); opacity: 0; }
+        }
+    </style>
+    <link href="https://fonts.googleapis.com" rel="stylesheet">
+</head>
+<body>
+
+    <div class="elite-card">
+        <h1>Sua Rainha</h1>
+        <div class="subtitle">UM MÊS DE LUXO AO SEU LADO</div>
+
+        <div class="bouquet-frame">
+            <!-- Rosas -->
+            <div class="flower rose f1"><div class="rose-petal"></div><div class="rose-petal" style="transform:rotate(90deg)"></div></div>
+            <div class="flower rose f4"><div class="rose-petal"></div><div class="rose-petal" style="transform:rotate(180deg)"></div></div>
+            <div class="flower rose f5"><div class="rose-petal"></div><div class="rose-petal" style="transform:rotate(270deg)"></div></div>
+
+            <!-- Margaridas -->
+            <div class="flower daisy f2">
+                <div class="daisy-center"></div>
+                <div class="daisy-petal" style="transform:rotate(45deg)"></div>
+                <div class="daisy-petal" style="transform:rotate(135deg)"></div>
+                <div class="daisy-petal" style="transform:rotate(225deg)"></div>
+                <div class="daisy-petal" style="transform:rotate(315deg)"></div>
+            </div>
+            <div class="flower daisy f3">
+                <div class="daisy-center"></div>
+                <div class="daisy-petal" style="transform:rotate(0deg)"></div>
+                <div class="daisy-petal" style="transform:rotate(90deg)"></div>
+                <div class="daisy-petal" style="transform:rotate(180deg)"></div>
+                <div class="daisy-petal" style="transform:rotate(270deg)"></div>
+            </div>
+
+            <div class="gold-wrap"></div>
+        </div>
+
+        <p style="color: #ccc; font-style: italic; margin-top: 40px;">
+            "Celebrando o primeiro milhão de momentos inesquecíveis com você."
+        </p>
+    </div>
+
+    <script>
+        function createGold() {
+            const p = document.createElement('div');
+            p.className = 'gold-particle';
+            p.style.left = Math.random() * 100 + 'vw';
+            p.style.top = '-10px';
+            p.style.opacity = Math.random();
+            p.style.animationDuration = (Math.random() * 3 + 2) + 's';
+            document.body.appendChild(p);
+            setTimeout(() => p.remove(), 5000);
+        }
+        setInterval(createGold, 100);
+    </script>
+</body>
+</html>

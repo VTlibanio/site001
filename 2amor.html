@@ -1,0 +1,446 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Nosso Primeiro Mês</title>
+    <link href="https://fonts.googleapis.com" rel="stylesheet">
+    <style>
+        :root {
+            --accent-rose: #8a3a47;
+            --gold-deep: #8e6d13;
+            --gold-light: #fcf6ba;
+            --glass: rgba(0, 0, 0, 0.96);
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            background: #000;
+            color: #ffffff;
+            font-family: 'Inter', sans-serif;
+            height: 100vh;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            overflow: hidden;
+        }
+
+        .bg-wave {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(135deg, #000 20%, #1a0a0c 45%, #2a0f14 50%, #1a0a0c 55%, #000 80%);
+            background-size: 400% 400%;
+            z-index: 1;
+            display: none;
+            animation: waveMove 10s ease-in-out infinite;
+        }
+
+        @keyframes waveMove {
+            0% {
+                background-position: 0% 0%;
+            }
+
+            50% {
+                background-position: 100% 100%;
+            }
+
+            100% {
+                background-position: 0% 0%;
+            }
+        }
+
+        .corner {
+            position: fixed;
+            width: 40px;
+            height: 40px;
+            border: 1px solid var(--accent-rose);
+            z-index: 100;
+            opacity: 0.3;
+            display: none;
+        }
+
+        .tl {
+            top: 40px;
+            left: 40px;
+            border-right: 0;
+            border-bottom: 0;
+        }
+
+        .tr {
+            top: 40px;
+            right: 40px;
+            border-left: 0;
+            border-bottom: 0;
+        }
+
+        .bl {
+            bottom: 40px;
+            left: 40px;
+            border-right: 0;
+            border-top: 0;
+        }
+
+        .br {
+            bottom: 40px;
+            right: 40px;
+            border-left: 0;
+            border-top: 0;
+        }
+
+        #intro-screen {
+            position: fixed;
+            z-index: 2000;
+            background: #000;
+            width: 100%;
+            height: 100%;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            transition: opacity 2.5s ease;
+        }
+
+        .dedicatoria-topo {
+            text-align: left;
+            align-self: flex-start;
+            margin-bottom: 8px;
+            font-size: 0.55rem;
+            letter-spacing: 2px;
+            color: #555;
+            line-height: 1.4;
+        }
+
+        .nome-ouro-anim {
+            display: inline-block;
+            font-family: 'Cinzel', serif;
+            font-weight: 700;
+            font-size: 0.95rem;
+            vertical-align: middle;
+            margin-left: 5px;
+            background: linear-gradient(90deg, #8e6d13 0%, #b38728 25%, #fcf6ba 50%, #b38728 75%, #8e6d13 100%);
+            background-size: 200% auto;
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            animation: goldFlow 3s linear infinite;
+        }
+
+        @keyframes goldFlow {
+            to {
+                background-position: 200% center;
+            }
+        }
+
+        .main-card {
+            width: 330px;
+            padding: 20px 25px;
+            background: var(--glass);
+            backdrop-filter: blur(30px);
+            border: 1px solid rgba(255, 255, 255, 0.04);
+            position: relative;
+            z-index: 10;
+            display: none;
+            opacity: 0;
+            filter: brightness(0);
+            transition: width 0.8s ease, opacity 2.5s ease, filter 2.5s ease;
+            max-height: 90vh;
+            overflow-y: auto;
+            scrollbar-width: none;
+        }
+
+        .card-visible {
+            opacity: 1;
+            filter: brightness(1);
+        }
+
+        .main-card.horizontal {
+            width: 750px;
+        }
+
+        .photo-wrapper {
+            width: 100%;
+            aspect-ratio: 1/1;
+            background: #000;
+            overflow: hidden;
+            margin-bottom: 6px;
+            border-radius: 2px;
+        }
+
+        .photo-wrapper img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            opacity: 0.8;
+        }
+
+        h1 {
+            font-size: 1.25rem;
+            font-weight: 300;
+            margin-bottom: 0px;
+            text-align: center;
+        }
+
+        .timer {
+            font-size: 0.6rem;
+            letter-spacing: 0.3em;
+            color: var(--accent-rose);
+            margin-bottom: 12px;
+            font-weight: 700;
+            text-align: center;
+        }
+
+        .btn-main {
+            background: #fff;
+            border: none;
+            color: #000;
+            padding: 14px;
+            cursor: pointer;
+            font-size: 0.65rem;
+            letter-spacing: 2px;
+            text-transform: uppercase;
+            font-weight: 700;
+            width: 100%;
+            transition: 0.3s;
+        }
+
+        .btn-back {
+            background: none;
+            border: 1px solid var(--accent-rose);
+            color: #fff;
+            margin-top: 25px;
+            padding: 12px 25px;
+            width: auto;
+            cursor: pointer;
+        }
+
+        .btn-replay {
+            position: fixed;
+            bottom: 45px;
+            right: 45px;
+            background: none;
+            border: none;
+            color: var(--accent-rose);
+            cursor: pointer;
+            z-index: 1000;
+            display: none;
+            font-size: 1.6rem;
+            opacity: 0.4;
+        }
+
+        #loading-page {
+            position: fixed;
+            z-index: 3000;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: #000;
+            display: none;
+        }
+
+        .flash {
+            position: absolute;
+            width: 200%;
+            height: 100%;
+            background: linear-gradient(90deg, transparent, var(--accent-rose), transparent);
+            transform: skewX(-20deg);
+            left: -150%;
+        }
+
+        .flash-active {
+            animation: flashAnim 1s ease-in-out forwards;
+        }
+
+        .heart {
+            position: absolute;
+            color: rgba(255, 255, 255, 0.4);
+            pointer-events: none;
+            animation: floatUp 8s linear forwards;
+        }
+
+        @keyframes floatUp {
+            0% {
+                transform: translateY(110vh);
+                opacity: 0;
+            }
+
+            100% {
+                transform: translateY(-30vh);
+                opacity: 0;
+            }
+        }
+
+        .final-text {
+            font-size: 0.85rem;
+            line-height: 1.6;
+            color: #fff;
+        }
+
+        .signature {
+            font-family: 'Great Vibes', cursive;
+            font-size: 1.7rem;
+            color: var(--accent-rose);
+            text-align: right;
+            margin: 15px 0;
+        }
+
+        .page-indicator {
+            position: fixed;
+            top: 40px;
+            left: 40px;
+            font-size: 0.6rem;
+            letter-spacing: 4px;
+            color: var(--accent-rose);
+            z-index: 100;
+            font-weight: bold;
+        }
+
+        .flex-container {
+            display: flex;
+            gap: 25px;
+            align-items: flex-start;
+        }
+
+        .side-photo {
+            width: 280px;
+            flex-shrink: 0;
+        }
+    </style>
+</head>
+
+<body>
+
+    <div id="intro-screen">
+        <div style="text-align: center; margin-bottom: 30px;">
+        </div>
+        <button class="btn-main" onclick="startGift()"
+            style="width: auto; padding: 15px 40px; background: none; border: 1px solid var(--accent-rose); color: #fff;">Exibir
+            Presente</button>
+    </div>
+
+    <div id="loading-page">
+        <div class="flash" id="f1"></div>
+        <div class="flash" id="f2" style="animation-delay: 0.4s;"></div>
+    </div>
+    <button class="btn-replay" id="replay" onclick="resetAll()">↻</button>
+    <div class="bg-wave" id="wave"></div>
+    <div class="corner tl"></div>
+    <div class="corner tr"></div>
+    <div class="corner bl"></div>
+    <div class="corner br"></div>
+    <div class="page-indicator" id="nav-counter" style="display:none">1/2</div>
+
+    <div class="main-card" id="card">
+        <div id="page-1">
+            <div class="dedicatoria-topo">
+                LEIA COM ATENÇÃO<br>
+                DE: VT <br>
+                PARA: <span class="nome-ouro-anim">Maria Clara Romano</span>
+            </div>
+
+            <div class="photo-wrapper"><img src="foto.jpg" alt="Foto"></div>
+            <div class="timer" id="timer">30D:00H:00M:00S</div>
+            <h1>Primeiro mês.</h1>
+            <p style="text-align: center; font-size: 0.7rem; color: #888; margin-bottom: 10px; font-style: italic;">"Me
+                perco a todo momento em seus olhos, mas também me reencontro neles a cada segundo que passa."</p>
+            <button class="btn-main" onclick="triggerFlash(2)">Nossa mensagem</button>
+        </div>
+
+        <div id="page-2" style="display:none;">
+            <div class="flex-container">
+                <div class="photo-wrapper side-photo"><img src="amor.JPG" alt="Amor"></div>
+                <div class="side-content">
+                    <div class="final-text">
+                        Sou completamente apaixonado por você, desde sua personalidade incrível até a forma de lidar
+                        comigo. <br><br>
+                        Quero agradecer por estarmos completando um mês juntos, pois muitas vezes foi difícil e
+                        decidimos escolher um ao outro.
+                        E em muitas situações onde poderíamos simplesmente desistir, decidimos amar e seguir em frente
+                        de mãos dadas. Valorizo muito ter você ao meu lado, e de coração pretendo ter isso pro resto da
+                        vida. <br><br>
+                        Todos que vivem próximo de mim sabem que eu sou autossuficiente, mas escolho dividir a vida com
+                        você todos os dias, não me arrependo disso em momento algum... <br><br>
+                        Todos os dias eu também me encontro no teu olhar e no teu sorriso. É bizarro como eu me apaixono
+                        cada vez mais por quem você é. <br><br>
+                        Do teu lado eu sinto uma paz enorme, você virou meu porto seguro real. Te escolho todo santo dia
+                        e vai ser assim pra sempre. <br><br>
+                        Eu te amo demais... amei ontem, amo hoje e vou te amar amanhã, só que cada vez mais, de um jeito
+                        muito mais nosso.
+                    </div>
+                    <div class="signature">Victor Libanio</div>
+                    <button class="btn-main btn-back" onclick="triggerFlash(1)">Voltar</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        const startDate = new Date("2026-02-09T00:00:00-03:00").getTime();
+
+        function startGift() {
+            document.getElementById('intro-screen').style.opacity = '0';
+            setTimeout(() => {
+                document.getElementById('intro-screen').style.display = 'none';
+                document.getElementById('wave').style.display = 'block';
+                document.getElementById('card').style.display = 'block';
+                setTimeout(() => {
+                    document.getElementById('card').classList.add('card-visible');
+                    document.getElementById('nav-counter').style.display = 'block';
+                    document.getElementById('replay').style.display = 'flex';
+                    document.querySelectorAll('.corner').forEach(c => c.style.display = 'block');
+                }, 50);
+            }, 1000);
+        }
+
+        function resetAll() { location.reload(); }
+
+        function triggerFlash(targetPage) {
+            const loader = document.getElementById('loading-page');
+            const f1 = document.getElementById('f1'); const f2 = document.getElementById('f2');
+            loader.style.display = 'flex';
+            f1.classList.add('flash-active'); f2.classList.add('flash-active');
+            setTimeout(() => { goToPage(targetPage); }, 600);
+            setTimeout(() => { loader.style.display = 'none'; f1.classList.remove('flash-active'); f2.classList.remove('flash-active'); }, 1500);
+        }
+
+        function goToPage(num) {
+            const p1 = document.getElementById('page-1'); const p2 = document.getElementById('page-2');
+            const card = document.getElementById('card'); const counter = document.getElementById('nav-counter');
+            card.scrollTop = 0;
+            if (num === 2) {
+                p1.style.display = 'none'; p2.style.display = 'block';
+                card.classList.add('horizontal'); counter.innerHTML = '2/2';
+            } else {
+                p1.style.display = 'block'; p2.style.display = 'none';
+                card.classList.remove('horizontal'); counter.innerHTML = '1/2';
+            }
+        }
+
+        function updateTimer() {
+            const diff = new Date().getTime() - startDate;
+            const d = Math.floor(diff / 86400000);
+            const h = Math.floor((diff % 86400000) / 3600000).toString().padStart(2, '0');
+            const m = Math.floor((diff % 3600000) / 60000).toString().padStart(2, '0');
+            const s = Math.floor((diff % 60000) / 1000).toString().padStart(2, '0');
+            document.getElementById('timer').innerHTML = `${d}D:${h}H:${m}M:${s}S`;
+        }
+
+        setInterval(updateTimer, 1000);
+        setInterval(() => {
+            const h = document.createElement('div'); h.className = 'heart'; h.innerHTML = '🤍';
+            h.style.left = Math.random() * 100 + 'vw'; document.body.appendChild(h);
+            setTimeout(() => h.remove(), 8000);
+        }, 900);
+        updateTimer();
+    </script>
+</body>
+
+</html>
